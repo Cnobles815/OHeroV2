@@ -7,7 +7,7 @@ var context = canvas.getContext('2d');
 console.log("Hellow World.");
 
   $scope.runGame = function(){
-console.log("Hello there?");
+      console.log("Hello again.");
     var Q = Quintus()
     .include("Sprites, Scenes")
     .setup(canvas);
@@ -99,7 +99,7 @@ Q.load(["/Images/basic-background.png"], function(){
     var background = new Q.Sprite({ asset: "/Images/basic-background.png", x: Q.el.width / 2, y: Q.el.height / 2, type: Q.SPRITE_NONE});
     var player = new Q.Player();
     Q.gameLoop(function(dt){
-        console.log("Hello Again.")
+        //console.log("Hello Again.")
         Q.clear();  
         background.render(Q.ctx);
         });
