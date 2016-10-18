@@ -1,7 +1,6 @@
 var Q = Quintus()
-    .include("Sprites, Scenes, Input, 2d, Anim, Touch, UI, TMX")
+    .include("Sprites, Scenes")
     .setup({maximize : true})
-    .controls().touch();
 
 Q.Sprite.extend("Enemy", {
     init: function(p) {
@@ -15,6 +14,10 @@ Q.Sprite.extend("Enemy", {
             if(collision.obj.isA("Player")) {
                 Q.stageScene("endGame",1,{ label: "You Died"});
                 collision.obj.destroy();
+            }
+            if(collision.obj.isA("Projectile")) {
+                this.destroy();
+                collision.obj.p.vy = -300;
             }
         });
 
@@ -41,6 +44,16 @@ Q.Sprite.extend("Player", {
 });
 
 Q.Sprite.extend("Projectile", {
+    init:function(p) {
+        this._super(p, {
+            asset:"",
+            type: Q.SPRITE_FRIENDLY,
+            speed: 300
+        })
+    }
+})
+
+Q.Projectile.extend("Beam", {
     init:function(p) {
         this._super(p, {
             asset:"",
