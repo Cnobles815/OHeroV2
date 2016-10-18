@@ -24,6 +24,7 @@ angular.module('starter.controllers', [])
     $scope.modal.hide();
   };
 
+
   // Open the login modal
   $scope.login = function() {
     $scope.modal.show();
@@ -52,5 +53,10 @@ angular.module('starter.controllers', [])
   ];
 })
 
+
+
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 });
+
+
+

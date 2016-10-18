@@ -1,4 +1,9 @@
-var Q = Quintus()
+angular.module('game.controllers', [])
+
+.controller('GameCtrl', function($scope) {
+  $scope.runGame = function(){
+    <script src="http://cdn.html5Quintus.com/v0.1.5/quintus-all.js"></script>
+    var Q = Quintus()
     .include("Sprites, Scenes")
     .setup({maximize : true})
 
@@ -93,5 +98,8 @@ Q.load(["/Images/basic-background.png"], function(){
         background.render(Q.ctx);
         //player.render(Q.ctx);
 
-    })
-});
+    
+
+  })
+
+})}});
