@@ -7,7 +7,11 @@ TODO: Figure out how to user Spring server for middleware.
 
 TODO: Figure out what database to use. SQL...something.
 
-TODO: Build into Ionic App? Conflicts with Angular.js?
+TODO: Build into Ionic App? Conflicts with Angular.js? [[DONE! Integrated with Ionic]]
+
+TODO: Build utilize physics engine.
+
+TODO: Need visual asssets (player sprite etc etc).
 
 The overall goal is to have a mobile/desktop app wherein the user can build their 'hero' and have the character grow in power and capabilities for mundane events attached to their account --- such as returning to a specific location, travel distance, and perhaps eventually purchases or health monitoring.
 
