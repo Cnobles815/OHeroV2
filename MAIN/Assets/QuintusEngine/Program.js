@@ -43,6 +43,7 @@ Q.Sprite.extend("Player", {
     }
 });
 
+
 Q.Sprite.extend("Projectile", {
     init:function(p) {
         this._super(p, {
@@ -61,6 +62,7 @@ Q.Projectile.extend("Beam", {
         })
     }
 })
+
 
 //TODO -- NEVERMIND. Remember to spell function correctly FFR
 Q.scene("level1",function(stage){
@@ -90,6 +92,5 @@ Q.load(["/Users/christophernobles/Dev/OHeroV2/MAIN/Assets/Images/basic-backgroun
         Q.clear();  
         background.render(Q.ctx);
         //player.render(Q.ctx);
-
-    });
+    })
 });
