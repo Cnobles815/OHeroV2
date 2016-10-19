@@ -8,9 +8,13 @@ console.log("Hellow World.");
 
   $scope.runGame = function(){
       console.log("Hello again.")
+
+
     var Q = Quintus()
-    .include("Sprites, Scenes, Anim, Input, 2D, Touch, UI")
-    .setup(canvas);
+    .include("Sprites, Scenes, Anim, 2D, UI, Input, Touch, Audio")
+    .setup(canvas)
+    .enableSound()
+    .controls();
 
         Q.Sprite.extend("Enemy", {
         init: function(p) {
@@ -44,13 +48,27 @@ console.log("Hellow World.");
 Q.Sprite.extend("Player", {
     init:function(p) {
         this._super(p, {
-            asset:"",
+            sprite:"player",
             x: Q.el.width / 2,
             y: Q.el.height - 60,
             type: Q.SPRITE_FRIENDLY,
             speed: 10
+        
         });
+        this.add("animation");
+        this.play("default");
+    },
+    step: function(dt) {
+        if(Q.inputs['left'])
+            this.p.x -= this.p.speed;
+        if(Q.inputs['right'])
+            this.p.x += this.p.speed;
+        if(Q.inputs['up'])
+            this.p.y -= this.p.speed;
+        if(Q.inputs['down'])
+            this.p.y += this.p.speed;
     }
+
 });
 
 
@@ -96,35 +114,18 @@ Q.Sprite.extend("Player", {
 // })
 
 Q.scene("level1",function(stage){
+    console.log("Stage check.");
 
-    stage.insert(new Q.Repeater({ asset: "/Images/basic-background.png", speedX: 0.5, speedY: 0.5, type: 0}));
+    Q.gravity = 10;
 
-    var player = stage.inser(new Q.Player());
+    stage.insert(new Q.Sprite({ asset: "/Images/basic-background.png", x: Q.el.width / 2, y: Q.el.height / 2, type: Q.SPRITE_NONE}));
 
-    stage.insert(new Q.Block({ x: 50, y: -30, h: 30, w: 50}));
-    
-    stage.insert(new Q.Block({ x: 0, y: 0, h:50, w: 150 }));
-
-    stage.insert(new Q.Block({
-        x: 140, y: 0, h: 50, w: 100,
-        points: [ [0, -15], [25,-40], [50, 0], [0,50], [-100,0] ]
-    }));
-
-    stage.insert(new Q.Block({ x: 500, y: 40, h: 50, w: 50}));
-
-    stage.add("viewport").follow(player);
-
-    stage.insert(new Q.Tower({ x: 500, y: 0}));
+    stage.insert(new Q.Player({ asset: "/Images/playerSpriteTest.png"}));
 });
 
-Q.load(["/Images/basic-background.png"], function(){
-    var background = new Q.Sprite({ asset: "/Images/basic-background.png", x: Q.el.width / 2, y: Q.el.height / 2, type: Q.SPRITE_NONE});
-    var player = new Q.Player();
-    Q.gameLoop(function(dt){
-        console.log("Hello Again.")
-        Q.clear();  
-        background.render(Q.ctx);
-        });
+Q.load(["/Images/basic-background.png", "/Images/playerSpriteTest.png"], function(){
+    Q.animations("player", {default: {frames: [0,1, 2, 3], rate: 1/4} });
+    Q.stageScene("level1");
 	
 });
 };
