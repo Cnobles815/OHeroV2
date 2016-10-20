@@ -45,6 +45,10 @@ console.log("Hellow World.");
     }
 });
 
+var SPRITE_NONE = 0;
+var SPRITE_FRIENDLY = 1;
+var SPRITE_FLOOR = 2;
+
 Q.Sprite.extend("Floor") , {
     init:function(p) {
         this._super(p, {
@@ -52,6 +56,7 @@ Q.Sprite.extend("Floor") , {
             x: Q.el.width / 2,
             y: Q.el.height / 2,
             type: Q.SPRITE_FRIENDLY,
+            collisionMask: SPRITE_FLOOR
         })
     }
 }
@@ -63,11 +68,12 @@ Q.Sprite.extend("Player", {
             x: Q.el.width / 2,
             y: Q.el.height - 60,
             type: Q.SPRITE_FRIENDLY,
+            collisionMask: SPRITE_FRIENDLY,
             speed: 15
         });
         this.add("animation");
         this.play("default");
-        //this.add("2d");
+        this.add("2d");
     },
     step: function(dt) {
         if(Q.inputs['left'])
@@ -101,50 +107,29 @@ Q.Sprite.extend("Player", {
 //         })
 //     }
 // })
-
-
-//TODO -- NEVERMIND. Remember to spell function correctly FFR
-// Q.scene("level1",function(stage){
-//     Q.stageTMX("level1.tmx",stage);
-//     stage.add("viewport").follow(Q("Player").first());
-// });
-
-// Q.scene('endGame',function(stage){
-//     var container = stage.insert(new Q.UI.Container({
-//         x: Q.width/2, y: Q.height/2, fill: "rgba(0,0,0,0.5)"
-//     }));
-
-//     var button = container.insert(new Q.UI.Button({ x: 0, y: 0, fill: "#CCCCCC",
-//                                                     label: "Play Again"}))
-//     var label = container.insert(new Q.UI.Text({x:10, y: -10 - button.p.h,
-//                                                 label: stage.options.label }));
-//     button.on("click",function(){
-//         Q.clearStages();
-//         Q.stageScene('level1');
-//     })
-// })
-
 Q.scene("level1",function(stage){
     console.log("Stage check.");
+    var player = stage.insert(new Q.Player());
 
     //var background = new Q.TileLayer({ dataAsset: 'level1.tmx', layerIndex: 0, sheet: 'tiles', tileW: 70, tileH: 70, type: Q.SPRITE_NONE});
 
-    Q.gravity = 10;
+    //Q.gravity = 1;
 
     //stage.insert(background);
 
-    //stage.collisionLayer(new Q.TileLayer({ dataAsset: '/Images/level1T.tmx', layerIndex:1, sheet: 'tiles', tileW: 70, tileH: 70, type: Q.SPRITE_NONE}));
+    //stage.collisionLayer(new Q.TileLayer({ dataAsset: '/Images/level1T.tmx', layerIndex:1, sheet: 'tiles', tileW: 70, tileH: 70, type: Q.SPRITE_FLOOR}));
 
     stage.insert(new Q.Sprite({ asset: "/Images/basic-background.png", x: Q.el.width / 2, y: Q.el.height / 2, type: Q.SPRITE_NONE}));
 
     stage.insert(new Q.Player({ asset: "/Images/playerSpriteTest.png"}));
 
-    //stage.collisionLayer(new Q.Floor({ asset: '/Images/level1T.tmx', layerIndex:1, sheet: 'tiles', tileW:70, tileH: 70, type: Q.SPRITE_NONE }));
+    stage.collisionLayer(new Q.Floor({ asset: '/Images/level1T.tmx', layerIndex:1, sheet: 'tiles', tileW:70, tileH: 70, type: Q.SPRITE_FLOOR }));
+    stage.add("viewport").follow(player);
 });
 
 Q.load(["/Images/basic-background.png", "/Images/tiles_map.png", "/Images/playerSpriteTest.png", "/Images/level1T.tmx"], function(){
     Q.animations("player", {default: {frames: [0, 1, 2, 3], rate: 1/4} });
-    //Q.sheet("tiles", "/Images/tiles_map.png", {tilew: 70, tileh: 70});
+    Q.sheet("tiles", "/Images/tiles_map.png", {tilew: 70, tileh: 70});
     Q.stageScene("level1");
 	
 });
