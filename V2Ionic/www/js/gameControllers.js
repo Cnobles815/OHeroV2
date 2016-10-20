@@ -45,6 +45,17 @@ console.log("Hellow World.");
     }
 });
 
+Q.Sprite.extend("Floor") , {
+    init:function(p) {
+        this._super(p, {
+            sprite:"floor",
+            x: Q.el.width / 2,
+            y: Q.el.height / 2,
+            type: Q.SPRITE_FRIENDLY,
+        })
+    }
+}
+
 Q.Sprite.extend("Player", {
     init:function(p) {
         this._super(p, {
@@ -52,11 +63,11 @@ Q.Sprite.extend("Player", {
             x: Q.el.width / 2,
             y: Q.el.height - 60,
             type: Q.SPRITE_FRIENDLY,
-            speed: 10
-        
+            speed: 15
         });
         this.add("animation");
         this.play("default");
+        //this.add("2d");
     },
     step: function(dt) {
         if(Q.inputs['left'])
@@ -116,15 +127,24 @@ Q.Sprite.extend("Player", {
 Q.scene("level1",function(stage){
     console.log("Stage check.");
 
+    //var background = new Q.TileLayer({ dataAsset: 'level1.tmx', layerIndex: 0, sheet: 'tiles', tileW: 70, tileH: 70, type: Q.SPRITE_NONE});
+
     Q.gravity = 10;
+
+    //stage.insert(background);
+
+    //stage.collisionLayer(new Q.TileLayer({ dataAsset: '/Images/level1T.tmx', layerIndex:1, sheet: 'tiles', tileW: 70, tileH: 70, type: Q.SPRITE_NONE}));
 
     stage.insert(new Q.Sprite({ asset: "/Images/basic-background.png", x: Q.el.width / 2, y: Q.el.height / 2, type: Q.SPRITE_NONE}));
 
     stage.insert(new Q.Player({ asset: "/Images/playerSpriteTest.png"}));
+
+    //stage.collisionLayer(new Q.Floor({ asset: '/Images/level1T.tmx', layerIndex:1, sheet: 'tiles', tileW:70, tileH: 70, type: Q.SPRITE_NONE }));
 });
 
-Q.load(["/Images/basic-background.png", "/Images/playerSpriteTest.png"], function(){
-    Q.animations("player", {default: {frames: [0,1, 2, 3], rate: 1/4} });
+Q.load(["/Images/basic-background.png", "/Images/tiles_map.png", "/Images/playerSpriteTest.png", "/Images/level1T.tmx"], function(){
+    Q.animations("player", {default: {frames: [0, 1, 2, 3], rate: 1/4} });
+    //Q.sheet("tiles", "/Images/tiles_map.png", {tilew: 70, tileh: 70});
     Q.stageScene("level1");
 	
 });

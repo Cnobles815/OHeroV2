@@ -32,11 +32,11 @@ angular.module('starter', ['ionic', 'starter.controllers','game.controllers'])
     controller: 'AppCtrl'
   })
 
-  .state('app.search', {
-    url: '/search',
+  .state('app.nearby', {
+    url: '/nearby',
     views: {
       'menuContent': {
-        templateUrl: 'templates/search.html'
+        templateUrl: 'templates/nearby.html'
       }
     }
   })
